@@ -6,7 +6,7 @@ class Users{
     fetchUsers(req,res){
         try{
             const strQry = `
-            Select user_id, first_name, last_name, department, card_id from Users;
+            Select user_id, first_name, last_name, department from Users;
             `
             db.query(strQry, (err, results) => {
                 if(err) throw err 
@@ -24,7 +24,7 @@ class Users{
     fetchUser(req, res) {
         try{
             const strQry = `
-            Select user_id, first_name, last_name, department, card_id from Users
+            Select user_id, first_name, last_name, department from Users
             where user_id = ${req.params.id}
             `
             db.query(strQry, (err, result) => {
@@ -152,31 +152,31 @@ class Users{
         }
     }
 
-    // Logs Functionality 
+    // Monitors
+    fetchMonitors(req,res){
+      try {
+        const strQry = `
+        SELECT user_id, email_add, user_pass, concat(first_name, " ", last_name) 'Full Name', department 
+        FROM Monitoring LEFT JOIN Users using(user_id) 
+        order by user_id desc;
+        `
 
-//     addLog(req,res){
-//         try {
-//             const strQry = `
-//                 Insert into Attendance(user_id) Where user_id = ${req.params.id};
-//             `
+        db.query(strQry, (err, result) => {
+          if (err) throw new err
+            res.json({
+              status : res.statusCode,
+              result
+            })
+        })
+      } catch (error) {
+        res.json({
+          status : 404,
+          error
+        })
+      }
+    }
+    
 
-//             db.query(strQry, (err,result) => {
-//                 if (err) throw new Error(err)
-//                     res.json({
-//                         status: res.statusCode,
-//                         result
-//                     }) 
-//             })
-            
-//         } catch (error) {
-//             if(error){
-//                 res.json({
-//                     status: 404,
-//                     result : `Couldn't find data`
-//                 }) 
-//             }
-//         }
-//     }
 }
 
   export {
