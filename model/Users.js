@@ -6,7 +6,7 @@ class Users{
     fetchUsers(req,res){
         try{
             const strQry = `
-            Select user_id, first_name, last_name, department_name, rfid_id from users;
+            Select user_id, first_name, last_name, department, card_id from Users;
             `
             db.query(strQry, (err, results) => {
                 if(err) throw err 
@@ -24,7 +24,7 @@ class Users{
     fetchUser(req, res) {
         try{
             const strQry = `
-            Select user_id, first_name, last_name, department_name,rfid_id from users
+            Select user_id, first_name, last_name, department, card_id from Users
             where user_id = ${req.params.id}
             `
             db.query(strQry, (err, result) => {
@@ -60,7 +60,7 @@ class Users{
             if (err) {
               res.json({
                 status: res.statusCode,
-                error: "This email has already been taken",
+                error: err.message,
               });
             } else {
               const token = createToken(user);
@@ -157,7 +157,7 @@ class Users{
 //     addLog(req,res){
 //         try {
 //             const strQry = `
-//                 Insert into logs(user_id) Where user_id = ${req.params.id};
+//                 Insert into Attendance(user_id) Where user_id = ${req.params.id};
 //             `
 
 //             db.query(strQry, (err,result) => {
