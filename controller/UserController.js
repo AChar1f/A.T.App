@@ -27,9 +27,9 @@ userRouter.get('/:id', (req, res) => {
    users.updateUser(req,res)
 })
 
-userRouter.post('/:id/addlog', (req,res) =>{
-   users.addLog(req,res)
-})
+// userRouter.post('/:id/addlog', (req,res) =>{
+//    users.addLog(req,res)
+// })
 
  export {
     userRouter,
