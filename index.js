@@ -1,6 +1,7 @@
 import path from 'path';
 import cors from 'cors';
-import { userRouter, express } from './controller/UserController.js';
+import { userRouter, express, monitoringRouter } from './controller/UserController.js';
+import { logRouter } from './controller/LogController.js';
 import { errorHandling } from './middleware/errorHandling.js';
 
 const app = express();
@@ -18,6 +19,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/users', userRouter);
+app.use('/admin', monitoringRouter);
+app.use('/logs', logRouter);
 app.use(
     express.static("./static"),
     express.json(),
