@@ -83,8 +83,8 @@ class Users{
           const { email_add, user_pass } = req.body;
     
           const strQry = `
-                select *
-                from Monitoring
+                select monitor_id, user_id, email_add, user_pass, concat(first_name, " ", last_name) 'Full Name', department 
+                FROM Monitoring LEFT JOIN Users using(user_id)
                 where email_add = '${email_add}'                  
                 `;
           db.query(strQry, async (err, result) => {
@@ -95,10 +95,9 @@ class Users{
                 msg: "Invalid email. Please provide a valid email or register.",
               })
             } else {
-                const isValidPass = await compare(req.body.user_pass, result[0].user_pass)
-                
-                console.log(isValidPass);
-                
+
+              const isValidPass = await compare(req.body.user_pass, result[0].user_pass)                
+              
               if (isValidPass) {
                 const token = createToken({
                   email_add,
