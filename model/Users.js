@@ -151,11 +151,32 @@ class Users{
         }
     }
 
+    deleteUser(req, res) {
+      try {
+        const strQry = `
+        delete from Monitoring where
+        monitor_id = ${req.params.id} 
+        `
+        db.query(strQry, (err) => {
+          if (err) throw new Error("An error occurred while deleting user. Please try again.")
+            res.json({
+              status: res.statusCode,
+              msg: 'User deleted successfully.'
+            })
+        })
+      } catch (e) {
+        res.json({
+          status: 404,
+          msg: e.message
+        })
+      }
+    }
+
     // Monitors
     fetchMonitors(req,res){
       try {
         const strQry = `
-        SELECT user_id, email_add, user_pass, concat(first_name, " ", last_name) 'Full Name', department 
+        SELECT monitor_id, user_id, email_add, user_pass, concat(first_name, " ", last_name) 'Full Name', department 
         FROM Monitoring LEFT JOIN Users using(user_id) 
         order by user_id desc;
         `

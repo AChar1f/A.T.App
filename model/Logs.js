@@ -25,12 +25,12 @@ class Logs{
     fetchUserStatus(req, res) {
         try {
           const strQry = `
-          select distinct user_id , concat(substring(created_at,1, 10), " " ,substring(created_at,12, 5))'Latest Log', 
+          select distinct concat(first_name, " ", last_name) 'Full Name', department, user_id , concat(substring(created_at,1, 10), " " ,substring(created_at,12, 5))'Latest Log', 
                 CASE 
                 WHEN COUNT(*) % 2 = 0 THEN 'Off-Site'
                 ELSE 'On-site'
               END AS status
-          from Attendance group by user_id 
+          from Attendance left join Users using (user_id) group by user_id 
           order by user_id desc;
           `
           db.query(strQry, (err, results) => {

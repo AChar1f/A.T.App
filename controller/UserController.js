@@ -48,6 +48,10 @@ monitoringRouter.patch('/:id/update', (req, res) => {
    users.updateUser(req,res)
 })
 
+monitoringRouter.delete('/:id', (req, res) => {
+   users.deleteUser(req,res)
+})
+
  export {
     userRouter,
     express,
