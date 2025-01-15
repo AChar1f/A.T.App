@@ -18,7 +18,7 @@ logRouter.get('/:id', (req, res) => {
 })
 
 logRouter.post('/add/:uid', (req, res) => {
-    logs.addLog(req, res)
+        logs.addLog(req, res)
 })
 
 export {

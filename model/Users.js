@@ -23,17 +23,36 @@ class Users{
     }
     fetchUser(req, res) {
         try{
-            const strQry = `
-            Select user_id, first_name, last_name, department from Users
-            where user_id = ${req.params.id}
+            let num = 0
+
+            for (let ind = 0; ind < 10; ind++) {
+              for (let index = 0; index < req.params.id.length; index++) {
+                if (req.params.id[index] == ind){
+                  num += 1
+                }
+              }
+            
+            }
+          
+            if (num === req.params.id.length) {
+              const strQry = `
+              Select user_id, first_name, last_name, department from Users
+              where user_id = ${req.params.id}
             `
-            db.query(strQry, (err, result) => {
-                if (err) throw new Error(err)
-                    res.json({
-                        status: res.statusCode,
-                        result: result[0]
-                    }) 
-            })
+              db.query(strQry, (err, result) => {
+                  if (err) throw new Error(err)
+                      res.json({
+                          status: res.statusCode,
+                          result: result[0]
+                      }) 
+              })
+
+            } else {
+                return res.json({
+                  status: 400,
+                  msg: 'Invalid user id.'
+                })
+          }  
         } catch (e) {
             res.json({
                 status: 404,
@@ -126,7 +145,7 @@ class Users{
         }
       }
       
-    async updateUser(req,res){
+    async updateAdmin(req,res){
         try{
             const strQry = `
             Update Monitoring Set ? Where user_id = ${req.params.id};            
@@ -151,11 +170,73 @@ class Users{
         }
     }
 
+    async updateUser(req,res){
+      try{
+          const strQry = `
+          Update Users Set ? Where user_id = ${req.params.id};            
+          `
+          db.query(strQry,[req.body], (err, result) => {
+              if (err) throw new Error(err)
+                  res.json({
+                      status: res.statusCode,
+                      result
+                  }) 
+          })
+      } catch (e) {
+          res.json({
+              status: 404,
+              msg: 'Failed to update.'
+          })
+      }
+    }
+
+    deleteUser(req, res) {
+      try {
+        const strQry = `
+        delete from Users where
+        user_id = ${req.params.id} 
+        `
+        db.query(strQry, (err) => {
+          if (err) throw new Error("An error occurred while deleting user. Please try again.")
+            res.json({
+              status: res.statusCode,
+              msg: 'User deleted successfully.'
+            })
+        })
+      } catch (e) {
+        res.json({
+          status: 404,
+          msg: e.message
+        })
+      }
+    }
+
+    deleteAdmin(req, res) {
+      try {
+        const strQry = `
+        delete from Monitoring where
+        monitor_id = ${req.params.id} 
+        `
+        db.query(strQry, (err) => {
+          if (err) throw new Error("An error occurred while deleting user. Please try again.")
+            res.json({
+              status: res.statusCode,
+              msg: 'User deleted successfully.'
+            })
+        })
+      } catch (e) {
+        res.json({
+          status: 404,
+          msg: e.message
+        })
+      }
+    }
+
     // Monitors
     fetchMonitors(req,res){
       try {
         const strQry = `
-        SELECT user_id, email_add, user_pass, concat(first_name, " ", last_name) 'Full Name', department 
+        SELECT monitor_id, user_id, email_add, user_pass, concat(first_name, " ", last_name) 'Full Name', department 
         FROM Monitoring LEFT JOIN Users using(user_id) 
         order by user_id desc;
         `
