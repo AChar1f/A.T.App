@@ -20,6 +20,14 @@ userRouter.get('/:id', (req, res) => {
     users.fetchUser(req, res)
 })
 
+userRouter.patch('/:id', (req, res) => {
+    users.updateUser(req, res)
+})
+
+userRouter.delete('/:id', (req, res) => {
+    users.deleteUser(req, res)
+})
+
 //  userRouter.post('/register', (req, res) => {
 //     users.registerUser(req, res)
 //  })
@@ -45,11 +53,11 @@ monitoringRouter.post('/login', (req,res) => {
 })
 
 monitoringRouter.patch('/:id/update', (req, res) => {
-   users.updateUser(req,res)
+   users.updateAdmin(req,res)
 })
 
 monitoringRouter.delete('/:id', (req, res) => {
-   users.deleteUser(req,res)
+   users.deleteAdmin(req,res)
 })
 
  export {

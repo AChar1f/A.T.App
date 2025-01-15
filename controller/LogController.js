@@ -18,7 +18,9 @@ logRouter.get('/:id', (req, res) => {
 })
 
 logRouter.post('/add/:uid', (req, res) => {
-    logs.addLog(req, res)
+    setTimeout(() =>{
+        logs.addLog(req, res)
+    }, 3000)
 })
 
 export {
