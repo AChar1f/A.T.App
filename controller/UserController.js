@@ -8,9 +8,7 @@ const userRouter = express.Router()
 const monitoringRouter = express.Router()
 
 userRouter.use(bodyParser.json())
-
-
-
+monitoringRouter.use(bodyParser.json())
 
 //Users
 
@@ -18,17 +16,18 @@ userRouter.get('/', (req, res) => {
     users.fetchUsers(req, res)
 })
 
-userRouter.get('/logs', (req, res) => {
-   users.fetchLogs(req, res)
-})
-
-userRouter.get('/status', (req, res) => {
-   users.fetchUserStatus(req, res)
-})
-
 userRouter.get('/:id', (req, res) => {
     users.fetchUser(req, res)
 })
+
+//  userRouter.post('/register', (req, res) => {
+//     users.registerUser(req, res)
+//  })
+
+//  userRouter.post('/login', (req, res) => {
+//     users.login(req, res)
+//  })
+
 
 //monitors
 
@@ -42,32 +41,11 @@ monitoringRouter.post('/register', (req,res) => {
 })
 
 monitoringRouter.post('/login', (req,res) => {
-   users.login(req, res)
-
+   users.login(req,res)
 })
 
-
-
-//  userRouter.post('/register', (req, res) => {
-//     users.registerUser(req, res)
-//  })
-
-//  userRouter.post('/login', (req, res) => {
-//     users.login(req, res)
-//  })
-
- userRouter.patch('/:id/update', (req, res) => {
+monitoringRouter.patch('/:id/update', (req, res) => {
    users.updateUser(req,res)
-})
-
-
-// logs endpoints 
-userRouter.get('/logs/:id', (req,res)=>{
-   users.fetchSingleUserLog(req,res)
-})
-
-userRouter.post('/log/:uid', (req, res ) => {
-   users.addLog(req, res)
 })
 
  export {

@@ -6,35 +6,96 @@
     <title>Backend Home</title>
 </head>
 <body>
-    You have arrive on the Backend home page.
+    <h1>You have arrive on the Backend home page.
+    </h1>
+    <main>
+        <table border = 5>
+            <caption><h3>Landing</h3></caption>
+            <thead>
+                <tr>
+                    <th>HTTP Methods</th>
+                    <th>Path</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>GET</td>
+                    <td>/ || /home</td>
+                    <td>Fetches landing/home page</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <h2>
-        Endpoint
-    </h2>
-    <p>
-        /users/: endpoint to fetch all users.
-    </p>
-    <p>
-        /users/:{insert user_id here}: fetches single user
-    </p>
-   
-
-    <table>
-        <thead>
-            <tr>
-                <th>Endpoint</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-                <td>
-                    <p>
-                        /admin/register: adds a user. Requires email address and password. Columns are email_add and user_pass
-                    </p>
-                    <p>
-                        /admin/login: Logs in registered user using their email and password.
-                    </p>
-                </td>
-            </tr>
-    </table>
+        <table border = 5>
+            <caption><h3>Users</h3></caption>
+            <thead>
+                <tr>
+                    <th>HTTP Method</th>
+                    <th>Path</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>GET</td>
+                    <td>/users</td>
+                    <td>Fetches all Users data from the database</td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>/users/:id</td>
+                    <td>Fetches a single User's data from the database for the id provided</td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>/admin</td>
+                    <td>Gets all admin users</td>
+                </tr>
+                <tr>
+                    <td>POST</td>
+                    <td>/admin/register</td>
+                    <td>Adds a new admin user to the database.</td>
+                </tr>
+                <tr>
+                    <td>PATCH</td>
+                    <td>/admin/:id/update</td>
+                    <td>Updates a admin user for the id value provided.</td>
+                </tr>
+            </tbody>
+        </table>
+        <table border="5">
+            <caption>Logs</caption>
+            <thead>
+                <tr>
+                    <th>HTTP Methods</th>
+                    <th>Path</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>GET</td>
+                    <td>/logs</td>
+                    <td>Fetches all users logs on the database</td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>/logs/status</td>
+                    <td>Fetches all users status logs on the database</td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>/logs/:id</td>
+                    <td>Fetches single user logs on the database</td>
+                </tr>
+                <tr>
+                    <td>POST</td>
+                    <td>/logs/add/:uid</td>
+                    <td>Adds user id on the database on attendance</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
 </body>
 </html>
