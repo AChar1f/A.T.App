@@ -31,7 +31,7 @@ class Logs{
                 ELSE 'On-site'
               END AS status
           from Attendance left join Users using (user_id) group by user_id 
-          order by user_id desc;
+          order by attendance_id desc;
           `
           db.query(strQry, (err, results) => {
             if(err) throw err
