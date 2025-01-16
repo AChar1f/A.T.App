@@ -21,20 +21,27 @@ class Users{
            })
         }
     }
+
+    numberChecker(req) {
+      let num = 0
+      for (let ind = 0; ind < 10; ind++) {
+        for (let index = 0; index < req.params.id.length; index++) {
+          if (req.params.id[index] == ind){
+            num += 1
+          }
+        }
+      
+      }
+
+      if (num === req.params.id.length) return true
+    }
+
+    
     fetchUser(req, res) {
         try{
-            let num = 0
 
-            for (let ind = 0; ind < 10; ind++) {
-              for (let index = 0; index < req.params.id.length; index++) {
-                if (req.params.id[index] == ind){
-                  num += 1
-                }
-              }
-            
-            }
           
-            if (num === req.params.id.length) {
+            if (this.numberChecker(req)) {
               const strQry = `
               Select user_id, first_name, last_name, department from Users
               where user_id = ${req.params.id}
