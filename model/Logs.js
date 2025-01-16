@@ -25,13 +25,29 @@ class Logs{
     fetchUserStatus(req, res) {
         try {
           const strQry = `
-          select distinct concat(first_name, " ", last_name) 'Full Name', department, user_id , concat(substring(created_at,1, 10), " " ,substring(created_at,12, 5))'Latest Log', 
-                CASE 
-                WHEN COUNT(*) % 2 = 0 THEN 'Off-Site'
-                ELSE 'On-site'
+          SELECT 
+              CONCAT(u.first_name, " ", u.last_name) AS 'Full Name',
+              u.department,
+              a.user_id,
+              a.attendance_id,
+              CONCAT(SUBSTRING(a.created_at, 1, 10), " ", SUBSTRING(a.created_at, 12, 5)) AS 'Latest Log',
+              CASE 
+                  WHEN (SELECT COUNT(*) FROM Attendance WHERE user_id = a.user_id) % 2 = 0 THEN 'Off-Site'
+                  ELSE 'On-Site'
               END AS status
-          from Attendance left join Users using (user_id) group by user_id 
-          order by attendance_id desc;
+          FROM 
+              Attendance a
+          LEFT JOIN 
+              Users u ON a.user_id = u.user_id
+          WHERE 
+              a.created_at = (
+                  SELECT MAX(created_at)
+                  FROM Attendance
+                  WHERE user_id = a.user_id
+              )
+          ORDER BY 
+              a.attendance_id DESC;
+
           `
           db.query(strQry, (err, results) => {
             if(err) throw err
