@@ -139,7 +139,6 @@ class Users{
                 res.json({
                   status: 401,
                   msg: "Invalid Password. Please input correct password or register.",
-                  result
                 })
               }
             }
